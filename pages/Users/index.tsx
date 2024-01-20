@@ -2,12 +2,15 @@ import { useState } from "react";
 
 const Users = () => {
   const [login, setLogin] = useState(true);
+
+	// Form state
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+	// Change view between login and register
   const handleLoginAndRegister = () => {
     setLogin(!login);
   };
@@ -32,6 +35,7 @@ const Users = () => {
 	// Valide user exist in database
   function checkUser(data) {
     for (const user of data) {
+
       if (user.email === email) {
         if (user.password === password) {
           return { success: true, user: user }; // Credenciales correctas
@@ -39,6 +43,7 @@ const Users = () => {
           return { success: false, error: "Contraseña incorrecta" }; // Contraseña incorrecta
         }
       }
+
     }
 
     return { success: false, error: "Email incorrecto" };
@@ -53,7 +58,8 @@ const Users = () => {
       },
       body: JSON.stringify({ username, name, lastname, email, password}),
     });
-
+ 		
+		// Login inter register user
     if (response.status === 201) {
 			handleLogin() // -- Login
     } else {
